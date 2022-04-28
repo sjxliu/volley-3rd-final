@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+
+import useStyles from "./styles";
 
 const Form = () => {
-  return (
-  <h1>FORM</h1>
-  )
-}
+  const dazzle_it = useStyles();
+  return <h1>FORM</h1>;
+};
 
-export default Form
+export default Form;
