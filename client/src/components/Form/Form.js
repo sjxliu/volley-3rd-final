@@ -1,6 +1,6 @@
 import React from "react";
 
-import useStyles from "./styles";
+import useStyles from "./FormStyles";
 
 const Form = () => {
   const dazzle_it = useStyles();

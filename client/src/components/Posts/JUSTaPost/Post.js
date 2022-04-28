@@ -1,6 +1,6 @@
 import React from 'react'
 
-import useStyles from "./styles";
+import useStyles from "./PostStyles";
 const Post = () => {
   const dazzle_it = useStyles();
   return (
