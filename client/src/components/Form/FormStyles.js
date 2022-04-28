@@ -7,7 +7,7 @@ export default makeStyles((main) => ({
     justifyContent: "center",
   },
   writeOn: {
-    padding: main.spacing(2),
+    padding: main.spacing(3),
   },
   base: {
     "& .MuiTextField-base": {
@@ -15,7 +15,7 @@ export default makeStyles((main) => ({
     },
   },
   upload: {
-    width: "95%",
+    width: "75%",
     margin: "10px 0",
   },
   subBtn: {

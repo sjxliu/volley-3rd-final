@@ -1,5 +1,5 @@
 import PostMessage from "../models/postMess.js";
-
+import Express from "express";
 
 export const getPosts = async (req, res) => {
   try {
