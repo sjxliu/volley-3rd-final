@@ -4,7 +4,7 @@ import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 
 import useStyles from "./FormStyles";
-import {newPost} from '../../hard/posts.js'
+import {newPost} from '../../actionsTypes/posts.js'
 
 const Form = () => {
   const [postData, setPostData] = useState({
@@ -23,6 +23,12 @@ const Form = () => {
     dispatch(newPost(postData))
   };
 
+  const handleChange = (e) => {
+    const key = e.target.name
+    const value = e.target.value
+setPostData({...postData, [key]: key === 'tags' ? value.split(','):value})
+  }
+
   const clear = () => {};
 
   return (
@@ -40,9 +46,7 @@ const Form = () => {
           label="Creator"
           fullWidth
           value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
+          onChange={handleChange}
         />
         <TextField
           name="title"
@@ -50,7 +54,7 @@ const Form = () => {
           label="Title"
           fullWidth
           value={postData.title}
-          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+          onChange={handleChange}
         />
         <TextField
           name="caption"
@@ -58,9 +62,7 @@ const Form = () => {
           label="Caption"
           fullWidth
           value={postData.caption}
-          onChange={(e) =>
-            setPostData({ ...postData, caption: e.target.value })
-          }
+          onChange={handleChange}
         />
         <TextField
           name="tags"
@@ -68,7 +70,7 @@ const Form = () => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={handleChange}
         />
         <div className={dazzle_it.upload}>
           <FileBase

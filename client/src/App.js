@@ -4,7 +4,7 @@ import { Container, AppBar, Grow, Grid } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
 // Variable imports
-import {getPosts} from './hard/posts'
+import {getPosts} from './actionsTypes/posts'
 import Posts from "./components/Posts/Posts";
 import Form from "./components/Form/Form";
 import volley_img from "./images/volley-logo.png";
