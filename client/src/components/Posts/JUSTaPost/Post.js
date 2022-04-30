@@ -16,7 +16,7 @@ import useStyles from "./PostStyles";
 
 
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
   const dazzle_it = useStyles();
   return (
     <Card className={dazzle_it.card}>
@@ -32,7 +32,7 @@ const Post = ({ post }) => {
         </Typography>
       </div>
       <div className={dazzle_it.bottomOver}>
-        <Button style={{ color: "white" }} size="small" onClick={() => {}}>
+        <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
           <MoreHorizIcon fontSize="default" />
         </Button>
       </div>
@@ -41,8 +41,11 @@ const Post = ({ post }) => {
           {post.tags.map((tag) => `#${tag} `)}{" "}
         </Typography>
       </div>
+      <Typography className={dazzle_it.title} variant="h5" gutterBottom>
+          {post.title}
+        </Typography>
       <CardContent>
-        <Typography className={dazzle_it.title} variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           {post.message}
         </Typography>
       </CardContent>

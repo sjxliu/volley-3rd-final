@@ -8,7 +8,7 @@ export const getPosts = async (req, res) => {
 
     res.status(200).json(postMess);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).json({ message: error });
   }
 };
 
@@ -21,7 +21,7 @@ export const createPost = async (req, res) => {
 
     res.status(201).json(newPost);
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(409).json({ message: error });
   }
 };
 
@@ -31,8 +31,20 @@ export const updatePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("Post does not exist, much like your skills");
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {
+  const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, {
     new: true,
   });
-  res.json(updatePost);
+  res.json(updatedPost);
 };
+
+
+export const deletePost = async(req, res) => {
+  const {id} = req.params
+  if (!mongoose.Types.ObjectId.isValid(_id))
+  return res.status(404).send("Post does not exist, much like your skills");
+
+  await PostMessage.findByIdAndRemove(id)
+
+  res.json({message: 'Post Cut successfully'})
+
+}

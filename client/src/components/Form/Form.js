@@ -1,48 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Paper, Typography } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import useStyles from "./FormStyles";
-import {newPost} from '../../actionsTypes/posts.js'
+import { newPost, updatePost } from "../../actionsTypes/posts.js";
 
 // STEAL CURRENT ID
 
-
-const Form = ({currentId, setCurrentId}) => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
     caption: "",
-    tags: "",
+    tags: [],
     selectedFile: "",
   });
+  const post = useSelector((state) =>
+    currentId
+      ? state.posts.find((selected) => selected._id === currentId)
+      : null
+  );
   const dazzle_it = useStyles();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
   //handlers
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(newPost(postData))
+    e.preventDefault();
+
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(newPost(postData));
+    }
+    clear();
   };
 
   const handleChange = (e) => {
-    const key = e.target.name
-    const value = e.target.value
-setPostData({...postData, [key]: key === 'tags' ? value.split(','):value})
-  }
+    const key = e.target.name;
+    const value = e.target.value;
+    setPostData({
+      ...postData,
+      [key]: key === "tags" ? value.split(",") : value,
+    });
+  };
 
-  const clear = () => {};
+  const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      creator: "",
+      title: "",
+      caption: "",
+      tags: [],
+      selectedFile: "",
+    });
+  };
 
   return (
-    <Paper className={dazzle_it.base}>
+    <Paper className={dazzle_it.base} elevation={6}>
       <form
         autoComplete="off"
         noValidate
         className={dazzle_it.form}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Spike It!</Typography>
+        <Typography variant="h6">
+          {currentId ? `Editing "${post?.title}"` : `Spike It!`}
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"

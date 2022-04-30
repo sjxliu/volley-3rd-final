@@ -24,4 +24,4 @@ mongoose.connect(CONNECTION_URL, {
     useUnifiedTopology: true,
   })
   .then(() => app.listen((PORT, () => console.log(`Port: ${PORT} has risen`))))
-  .catch((error) => console.log(error.message));
+  .catch((error) => console.log(error));
