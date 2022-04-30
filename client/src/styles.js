@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   heading: {
     color: "rbga(2, 68, 66)",
   },
@@ -15,4 +15,9 @@ export default makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  [theme.breakpoints.down('sm')]: {
+    main:{
+      flexDirection: "column-reverse"
+    }
+  }
 }));

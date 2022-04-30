@@ -31,20 +31,35 @@ export const updatePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("Post does not exist, much like your skills");
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, {
-    new: true,
-  });
+  const updatedPost = await PostMessage.findByIdAndUpdate(
+    _id,
+    { ...post, _id },
+    {
+      new: true,
+    }
+  );
   res.json(updatedPost);
 };
 
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("Post does not exist, much like your skills");
+  await PostMessage.findByIdAndRemove(id);
+  console.log("DELETE");
+  res.json({ message: "Post Cut successfully" });
+};
 
-export const deletePost = async(req, res) => {
-  const {id} = req.params
-  if (!mongoose.Types.ObjectId.isValid(_id))
-  return res.status(404).send("Post does not exist, much like your skills");
+export const supportPost = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("Post does not exist, much like your skills");
 
-  await PostMessage.findByIdAndRemove(id)
-
-  res.json({message: 'Post Cut successfully'})
-
-}
+  const post = await PostMessage.findById(id);
+  const updatedPost = await PostMessage.findByIdAndUpdate(
+    id,
+    { supportCount: post.supportCount + 1 },
+    { new: true }
+  );
+  res.json(updatedPost);
+};

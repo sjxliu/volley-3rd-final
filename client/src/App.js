@@ -33,6 +33,7 @@ const App = () => {
         <Container>
           <Grid
             container
+           className={dazzle_it.main}
             spacing={3}
             justifyContent="space-between"
             alignItems="stretch"

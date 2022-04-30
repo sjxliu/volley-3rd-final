@@ -11,13 +11,17 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+
+import {supportPost, deletePost} from '../../../actionsTypes/posts'
 
 import useStyles from "./PostStyles";
 
 
-
 const Post = ({ post, setCurrentId }) => {
   const dazzle_it = useStyles();
+  const dispatch = useDispatch();
+
   return (
     <Card className={dazzle_it.card}>
       <CardMedia
@@ -32,7 +36,11 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </div>
       <div className={dazzle_it.bottomOver}>
-        <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
+        <Button
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => setCurrentId(post._id)}
+        >
           <MoreHorizIcon fontSize="default" />
         </Button>
       </div>
@@ -42,20 +50,20 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </div>
       <Typography className={dazzle_it.title} variant="h5" gutterBottom>
-          {post.title}
-        </Typography>
+        {post.title}
+      </Typography>
       <CardContent>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="body2" color="textSecondary" component='p'>
           {post.message}
         </Typography>
       </CardContent>
       <CardActions className={dazzle_it.actions}>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button size="small" color="primary" onClick={() => dispatch(supportPost(post._id))}>
           <ThumbUpAltIcon fontSize="small" />
-          Nice Kill
+          &nbsp; Nice Kill &nbsp;
           {post.like}
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
           <DeleteIcon fontSize="small" />
           Delete
         </Button>
