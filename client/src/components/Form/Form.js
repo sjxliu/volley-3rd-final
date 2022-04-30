@@ -6,7 +6,10 @@ import { useDispatch } from "react-redux";
 import useStyles from "./FormStyles";
 import {newPost} from '../../actionsTypes/posts.js'
 
-const Form = () => {
+// STEAL CURRENT ID
+
+
+const Form = ({currentId, setCurrentId}) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",

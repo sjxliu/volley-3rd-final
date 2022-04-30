@@ -6,11 +6,12 @@ import cors from "cors";
 import postRoutes from "./routes/posts.js";
 
 const app = express();
+// const cors = require('cors'); HATES IT
 
 //middleware
 app.use(express.json({ limit: "50mb", extended: true }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 app.use("/posts", postRoutes);
 
 //mongodb
