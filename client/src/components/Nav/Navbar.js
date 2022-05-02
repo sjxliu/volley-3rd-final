@@ -3,10 +3,16 @@ import { Link } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import volley_img from "../../images/volley-logo.png";
 import useStyles from "./NavStyles";
+import history from "./History";
 
 const Navbar = () => {
   const dazzle_it = useStyles();
   const user = null;
+  const signup = () => {
+    history.push("/auth");
+  };
+  console.log(history);
+
 
   return (
     <AppBar position="static" color="inherit" className={dazzle_it.appBar}>
@@ -44,8 +50,9 @@ const Navbar = () => {
           </div>
         ) : (
           <Button
-            component={Link}
-            to="/auth"
+            // component={Link}
+            // to="/auth"
+            onClick={signup}
             variant="contained"
             color="primary"
           >

@@ -1,8 +1,8 @@
 // Dependency imports
 import React from "react";
 import { Container } from "@material-ui/core";
-import { Switch } from "@material-ui/core";
-import { BrowserRouter, Route } from "react-router-dom";
+//import { Switch } from "@material-ui/core";
+import {BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 // Variable imports
 
@@ -11,16 +11,19 @@ import Home from "./components/Homepage/Home";
 import Auth from './components/Authentication/Auth'
 
 const App = () => {
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   return (
-    <BrowserRouter>
-      <Container maxwidth="lg">
+    <Router>
+      <Container maxwidth="xl">
         <Navbar />
-        <Switch>
-          <Route path="/" exact component={Home}/>
-          <Route path="/auth" exact component={Auth}/>
-        </Switch>
+        <Routes>
+        <Route path="/" exact element={() => <Navigate to="/posts" />} />
+          <Route path="/posts" exact element={Home}/>
+          <Route path="/auth" exact element={() => (!user ? <Auth /> : <Navigate to="/posts" />)} />
+        </Routes>
       </Container>
-    </BrowserRouter>
+    </Router>
   );
 };
 

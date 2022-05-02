@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <Grow in>
-      <Container>
+      <Container maxWidth="xl">
         <Grid
           container
           className={dazzle_it.main}
@@ -26,10 +26,10 @@ const Home = () => {
           justifyContent="space-between"
           alignItems="stretch"
         >
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={12} sm={7} md={9}>
             <Posts setCurrentId={setCurrentId} />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12}  md={3} sm={4}>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
           </Grid>
         </Grid>
