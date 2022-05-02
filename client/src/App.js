@@ -1,6 +1,7 @@
 // Dependency imports
-import React, {Switch} from "react";
+import React from "react";
 import { Container } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 import { BrowserRouter, Route } from "react-router-dom";
 
 // Variable imports
@@ -18,7 +19,6 @@ const App = () => {
           <Route path="/" exact component={Home}/>
           <Route path="/auth" exact component={Auth}/>
         </Switch>
-        <Home />
       </Container>
     </BrowserRouter>
   );
