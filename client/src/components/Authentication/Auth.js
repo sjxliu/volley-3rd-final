@@ -18,7 +18,7 @@ import useStyles from "./AuthStyles";
 import Base from "./Base";
 import Icon from "./Icon";
 import { clientId } from "./IDs";
-import {signin, signup} from '../../actionsTypes/auth'
+import { signin, signup } from "../../actionsTypes/auth";
 
 const initialState = {
   firstName: "",
@@ -41,12 +41,11 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
-    if(isSignup){
-dispatch(signup(signupData, navigate))
-    } else{
-      dispatch(signin(signupData, navigate))
 
+    if (isSignup) {
+      dispatch(signup(signupData, navigate));
+    } else {
+      dispatch(signin(signupData, navigate));
     }
   };
 
@@ -56,7 +55,7 @@ dispatch(signup(signupData, navigate))
 
   const switchForm = () => {
     setIsSignup((prevIsSignUp) => !prevIsSignUp);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
 
   const googleSuccess = async (res) => {

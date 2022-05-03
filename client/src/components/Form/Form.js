@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Paper, Typography } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import useStyles from "./FormStyles";
 import { newPost, updatePost } from "../../actionsTypes/posts.js";
@@ -10,34 +11,50 @@ import { newPost, updatePost } from "../../actionsTypes/posts.js";
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     caption: "",
     tags: [],
     selectedFile: "",
   });
+
   const post = useSelector((state) =>
     currentId
       ? state.posts.find((selected) => selected._id === currentId)
       : null
   );
+
+  const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      title: "",
+      caption: "",
+      tags: [],
+      selectedFile: "",
+    });
+  };
+
   const dazzle_it = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
 
   //handlers
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
+    if (currentId === 0) {
+      dispatch(newPost({ ...postData, name: user?.result?.name }, navigate));
+      clear();
     } else {
-      dispatch(newPost(postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
+      clear();
     }
-    clear();
   };
 
   const handleChange = (e) => {
@@ -49,16 +66,15 @@ const Form = ({ currentId, setCurrentId }) => {
     });
   };
 
-  const clear = () => {
-    setCurrentId(null);
-    setPostData({
-      creator: "",
-      title: "",
-      caption: "",
-      tags: [],
-      selectedFile: "",
-    });
-  };
+  if (!user?.result?.name) {
+    return (
+      <Paper className={dazzle_it.base} elevation={6}>
+        <Typography variant="h6" align="center">
+          Please Sign In to trash talk and support.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={dazzle_it.base} elevation={6}>
@@ -71,14 +87,6 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? `Editing "${post?.title}"` : `Spike It!`}
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={handleChange}
-        />
         <TextField
           name="title"
           variant="outlined"

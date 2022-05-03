@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 //routes
 import postRoutes from "./routes/posts.js";
-import usertRoutes from "./routes/users.js";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 // const cors = require('cors'); HATES IT
