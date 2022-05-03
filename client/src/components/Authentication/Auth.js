@@ -11,25 +11,48 @@ import {
   Container,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LocalActivityOutlined";
-import  GoogleLogin  from "react-google-login";
+import GoogleLogin from "react-google-login";
 
 // Componenets
 import useStyles from "./AuthStyles";
 import Base from "./Base";
 import Icon from "./Icon";
 import { clientId } from "./IDs";
+import {signin, signup} from '../../actionsTypes/auth'
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Auth = () => {
   const dazzle_it = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [signupData, setSignupData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+   
+    if(isSignup){
+dispatch(signup(signupData, navigate))
+    } else{
+      dispatch(signin(signupData, navigate))
+
+    }
+  };
+
+  const handleChange = (e) => {
+    setSignupData({ ...signupData, [e.target.name]: e.target.value });
+  };
 
   const switchForm = () => {
     setIsSignup((prevIsSignUp) => !prevIsSignUp);

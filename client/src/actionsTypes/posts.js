@@ -1,5 +1,5 @@
 import { FETCH_ALL, DELETE, UPDATE, CREATE } from "../calls/callTypes";
-import * as api from "../api";
+import * as api from "../api/index.js";
 
 //action creators = func that return action(object w/ type & payload)
 
