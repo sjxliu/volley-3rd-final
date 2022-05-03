@@ -1,6 +1,7 @@
 // Dependencies & Tools
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -10,7 +11,7 @@ import {
   Container,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LocalActivityOutlined";
-import { GoogleLogin } from "react-google-login";
+import  GoogleLogin  from "react-google-login";
 
 // Componenets
 import useStyles from "./AuthStyles";
@@ -23,6 +24,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -39,6 +41,7 @@ const Auth = () => {
     const token = res?.tokenId;
     try {
       dispatch({ type: "AUTH", data: { result, token } });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
