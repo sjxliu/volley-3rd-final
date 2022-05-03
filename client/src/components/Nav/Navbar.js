@@ -1,18 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import volley_img from "../../images/volley-logo.png";
 import useStyles from "./NavStyles";
 import history from "./History";
 
+
 const Navbar = () => {
   const dazzle_it = useStyles();
-  const user = null;
+const [user, setUser] = useState
   const signup = () => {
     history.push("/auth");
   };
   console.log(history);
-
 
   return (
     <AppBar position="static" color="inherit" className={dazzle_it.appBar}>

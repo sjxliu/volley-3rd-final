@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider,} from "react-redux";
-// import { applyMiddleware, compose, } from "redux";
+import { applyMiddleware, compose } from "redux";
 import { configureStore } from '@reduxjs/toolkit'
-// import thunk from "redux-thunk";
+import thunk from "redux-thunk";
 
 import reducers from "./reducers";
 
 import App from "./App";
 import "./app.css"
 
-const store = configureStore({reducer: reducers})
+const store = configureStore({reducer: reducers}, compose(applyMiddleware(thunk)));
   
 //, compose(applyMiddleware(thunk)));
 ReactDOM.render(
