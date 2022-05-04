@@ -9,6 +9,7 @@ import {BrowserRouter as Router, Routes, Route, Navigate } from "react-router-do
 import Navbar from "./components/Nav/Navbar";
 import Home from "./components/Homepage/Home";
 import Auth from './components/Authentication/Auth'
+import PostDetails from "./components/PostItems/PostDetails";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -20,6 +21,8 @@ const App = () => {
         <Routes>
         <Route path="/" exact element={() => <Navigate to="/posts" />} />
           <Route path="/posts" exact element={<Home/>}/>
+          <Route path="/posts/search" exact element={<Home/>} />
+          <Route path="/posts/:id" exact element={<PostDetails/>} />
           <Route path="/auth" exact element={() => (!user ? <Auth /> : <Navigate to="/posts" />)} />
         </Routes>
       </Container>

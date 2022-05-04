@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
+import decode from "jwt-decode";
 
 import volley_img from "../../images/volley-logo.png";
 import useStyles from "./NavStyles";
@@ -22,9 +23,14 @@ const Navbar = () => {
     navigate("/auth");
   };
 
+  //1 hour automatic logout
   useEffect(() => {
     const token = user?.token;
-    //JWT
+
+    if (token) {
+      const decoded = decode(token);
+      if (decoded.exp * 1000 < new Date().getTime()) logout();
+    }
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
