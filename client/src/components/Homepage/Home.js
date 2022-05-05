@@ -34,7 +34,6 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
 
-
   const searchPost = () => {
     if (search.trim() || tags) {
       dispatch(getSearchedPosts({ search, tags: tags.join(",") }));
@@ -101,10 +100,13 @@ const Home = () => {
               ></Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
-            <Paper className={dazzle_it.pagination} elevation={6}>
-              <Folio />
-            </Paper>
-            <Folio page={page} />
+            
+            {/* if no tags or search*/}
+            {!searchQuery && !tags.length && (
+              <Paper className={dazzle_it.pagination} elevation={6}>
+                <Folio page={page} />
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Container>

@@ -6,6 +6,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  ButtonBase,
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
@@ -54,50 +55,51 @@ const Post = ({ post, setCurrentId }) => {
     );
   };
 
-  const openPost = (e) => {
+  const displayPostDetails = (e) => {
     // dispatch(getPost(post._id, history));
-
     navigate(`/posts/${post._id}`);
   };
 
   return (
     <Card raised elevation={6} className={dazzle_it.card}>
-      <CardMedia
-        className={dazzle_it.content}
-        image={post.selectedFile}
-        title={post.title}
-      />
-      <div className={dazzle_it.topOver}>
-        <Typography variant="h6">{post.name} </Typography>
-        <Typography variant="body2">
-          {moment(post.creator).fromNow()}{" "}
-        </Typography>
-      </div>
-      {(user?.result?.googleId === post?.creator ||
-        user?.result?._id === post?.creator) && (
-        <div className={dazzle_it.bottomOver}>
-          <Button
-            style={{ color: "white" }}
-            size="small"
-            onClick={() => setCurrentId(post._id)}
-          >
-            <MoreHorizIcon fontSize="default" />
-          </Button>
+      <ButtonBase className={dazzle_it.actions} onClick={displayPostDetails}>
+        <CardMedia
+          className={dazzle_it.content}
+          image={post.selectedFile}
+          title={post.title}
+        />
+        <div className={dazzle_it.topOver}>
+          <Typography variant="h6">{post.name} </Typography>
+          <Typography variant="body2">
+            {moment(post.creator).fromNow()}{" "}
+          </Typography>
         </div>
-      )}
-      <div className={dazzle_it.details}>
-        <Typography variant="body2" color="textSecondary">
-          {post.tags.map((tag) => `#${tag} `)}{" "}
+        {(user?.result?.googleId === post?.creator ||
+          user?.result?._id === post?.creator) && (
+          <div className={dazzle_it.bottomOver}>
+            <Button
+              style={{ color: "white" }}
+              size="small"
+              onClick={() => setCurrentId(post._id)}
+            >
+              <MoreHorizIcon fontSize="default" />
+            </Button>
+          </div>
+        )}
+        <div className={dazzle_it.details}>
+          <Typography variant="body2" color="textSecondary">
+            {post.tags.map((tag) => `#${tag} `)}{" "}
+          </Typography>
+        </div>
+        <Typography className={dazzle_it.title} variant="h5" gutterBottom>
+          {post.title}
         </Typography>
-      </div>
-      <Typography className={dazzle_it.title} variant="h5" gutterBottom>
-        {post.title}
-      </Typography>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {post.message}
-        </Typography>
-      </CardContent>
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {post.message}
+          </Typography>
+        </CardContent>
+      </ButtonBase>
       <CardActions className={dazzle_it.actions}>
         <Button
           size="small"

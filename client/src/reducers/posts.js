@@ -6,6 +6,7 @@ import {
   FETCH_BY_FILTERS,
   START_LOAD,
   END_LOAD,
+  FETCH_BY_ID,
 } from "../calls/callTypes";
 //turn in obj spread state and return posts
 export default (state = { isLoading: true, posts: [] }, action) => {
@@ -34,6 +35,8 @@ export default (state = { isLoading: true, posts: [] }, action) => {
         numberOfPages: action.payload.numberOfPages,
       };
     case FETCH_BY_FILTERS:
+      return { ...state, posts: action.payload.data };
+    case FETCH_BY_ID:
       return { ...state, posts: action.payload.data };
     case CREATE:
       return { ...state, posts: [...state.posts, action.payload] };

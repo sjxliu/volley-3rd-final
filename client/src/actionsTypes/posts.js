@@ -1,13 +1,26 @@
-import { FETCH_ALL, DELETE, UPDATE, CREATE, FETCH_BY_FILTERS, START_LOAD, END_LOAD } from "../calls/callTypes";
+import { FETCH_ALL, DELETE, UPDATE, CREATE, FETCH_BY_FILTERS, START_LOAD, END_LOAD, FETCH_BY_ID } from "../calls/callTypes";
 import * as api from "../api/index.js";
 
 
 //action creators = func that return action(object w/ type & payload)
 
+export const getPost = (id) => async (dispatch) => {
+  try {
+    dispatch({type: START_LOAD})
+    const { data } = await api.fetchPost(id);
+
+    dispatch({ type: FETCH_BY_ID, payload: data });
+    dispatch({type: END_LOAD})
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 export const getPosts = (page) => async (dispatch) => {
   try {
     dispatch({type: START_LOAD})
-    const { data } = await api.fetchPost();
+    const { data } = await api.fetchPosts();
 
     dispatch({ type: FETCH_ALL, payload: data });
     dispatch({type: END_LOAD})

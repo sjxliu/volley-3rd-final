@@ -74,7 +74,7 @@ const Auth = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+     <Container component="main" maxWidth="xs">
       <Paper className={dazzle_it.base} elevation={3}>
         <Avatar className={dazzle_it.avatar}>
           <LockOutlinedIcon />
@@ -158,7 +158,7 @@ const Auth = () => {
           </Grid>
         </form>
       </Paper>
-    </Container>
+     </Container>
   );
 };
 
