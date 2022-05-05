@@ -12,11 +12,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
 
-import { getPost, getSearchedPosts } from "../../actionsTypes/posts";
+import { getPosts, getSearchedPosts } from "../../actionsTypes/posts";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import useStyles from "./HomeStyles";
 import Folio from "../Folio";
+import { Pagination } from "@material-ui/lab";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -33,13 +34,13 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
 
-  useEffect(() => {
-    dispatch(getPost());
-  }, [currentId, dispatch]);
 
   const searchPost = () => {
-    if (search.trim()) {
+    if (search.trim() || tags) {
       dispatch(getSearchedPosts({ search, tags: tags.join(",") }));
+      navigate(
+        `/posts/search?searchQuery=${search || null}&tags+${tags.join(",")}`
+      );
     } else {
       navigate("/");
     }
@@ -103,6 +104,7 @@ const Home = () => {
             <Paper className={dazzle_it.pagination} elevation={6}>
               <Folio />
             </Paper>
+            <Folio page={page} />
           </Grid>
         </Grid>
       </Container>

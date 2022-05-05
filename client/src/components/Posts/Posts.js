@@ -6,11 +6,11 @@ import Post from "./JUSTaPost/Post";
 import useStyles from "./PostsStyles";
 
 const Posts = ({currentId, setCurrentId}) => {
-  const posts = useSelector((state) => state.posts);
+  const {posts} = useSelector((state) => state.posts);
   const dazzle_it = useStyles();
 
   console.log(posts);
-  return !posts.length ? (
+  return !posts?.length ? (
     <CircularProgress />
   ) : (
     <Grid
@@ -20,7 +20,7 @@ const Posts = ({currentId, setCurrentId}) => {
       spacing={3}
     >
       {posts.map((post) => (
-        <Grid item key={post._id} xs={12} sm={6}>
+        <Grid item key={post._id} xs={12} sm={6} lg={3}>
           <Post post={post} setCurrentId={setCurrentId}/>
         </Grid>
       ))}
