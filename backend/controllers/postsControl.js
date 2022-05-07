@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import PostMessage from "../models/postMess.js";
 
+const router = express.Router();
 
 
 export const getPost = async (req, res) => { 
@@ -29,7 +30,6 @@ export const getPosts = async (req, res) => {
       .skip(start);
 
     res
-      .status(200)
       .json({
         data: posts,
         currentPage: Number(page),
@@ -44,12 +44,12 @@ export const getPosts = async (req, res) => {
 //Params > /posts/123 > id = 123
 
 export const getSearchedPosts = async (req, res) => {
-  const { searchQuery, tags } = req.query;
+  const { searchQuery } = req.query;
   try {
     const title = new RegExp(searchQuery, "i");
 
     const posts = await PostMessage.find({
-      $or: [{ title }, { tags: { $in: tags.split(",") } }],
+      $or: [{ title }],
     });
     res.json({ data: posts });
   } catch (error) {
@@ -121,3 +121,5 @@ export const supportPost = async (req, res) => {
   });
   res.json(updatedPost);
 };
+
+export default router;

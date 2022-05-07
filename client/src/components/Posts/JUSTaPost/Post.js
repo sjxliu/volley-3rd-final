@@ -86,11 +86,11 @@ const Post = ({ post, setCurrentId }) => {
             </Button>
           </div>
         )}
-        <div className={dazzle_it.details}>
+        {/* <div className={dazzle_it.details}>
           <Typography variant="body2" color="textSecondary">
             {post.tags.map((tag) => `#${tag} `)}{" "}
           </Typography>
-        </div>
+        </div> */}
         <Typography className={dazzle_it.title} variant="h5" gutterBottom>
           {post.title}
         </Typography>

@@ -13,7 +13,6 @@ const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     title: "",
     caption: "",
-    tags: [],
     selectedFile: "",
   });
 
@@ -28,7 +27,6 @@ const Form = ({ currentId, setCurrentId }) => {
     setPostData({
       title: "",
       caption: "",
-      tags: [],
       selectedFile: "",
     });
   };
@@ -62,7 +60,6 @@ const Form = ({ currentId, setCurrentId }) => {
     const value = e.target.value;
     setPostData({
       ...postData,
-      [key]: key === "tags" ? value.split(",") : value,
     });
   };
 
@@ -101,14 +98,6 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Caption"
           fullWidth
           value={postData.caption}
-          onChange={handleChange}
-        />
-        <TextField
-          name="tags"
-          variant="outlined"
-          label="Tags"
-          fullWidth
-          value={postData.tags}
           onChange={handleChange}
         />
         <div className={dazzle_it.upload}>

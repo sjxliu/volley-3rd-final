@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
 
-import { getPosts, getSearchedPosts } from "../../actionsTypes/posts";
+import { getSearchedPosts } from "../../actionsTypes/posts";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import useStyles from "./HomeStyles";
@@ -24,7 +24,7 @@ function useQuery() {
 }
 
 const Home = () => {
-  const [currentId, setCurrentId] = useState(null);
+  const [currentId, setCurrentId] = useState(0);
   const dazzle_it = useStyles();
   const dispatch = useDispatch();
   const query = useQuery();
@@ -32,13 +32,12 @@ const Home = () => {
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
-  const [tags, setTags] = useState([]);
-
+ 
   const searchPost = () => {
-    if (search.trim() || tags) {
-      dispatch(getSearchedPosts({ search, tags: tags.join(",") }));
+    if (search.trim() ) {
+      dispatch(getSearchedPosts({ search}));
       navigate(
-        `/posts/search?searchQuery=${search || null}&tags+${tags.join(",")}`
+        `/posts/search?searchQuery=${search || null}`
       );
     } else {
       navigate("/");
@@ -51,10 +50,10 @@ const Home = () => {
     }
   };
 
-  const handleAdd = (tag) => setTags([...tags, tag]);
 
-  const handleDelete = (tagToDelete) =>
-    setTags(tags.filter((tag) => tag !== tagToDelete));
+
+  //const handleDelete = (tagToDelete) =>
+   // setTags(tags.filter((tag) => tag !== tagToDelete));
 
   return (
     <Grow in>
@@ -84,14 +83,14 @@ const Home = () => {
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={handleEnter}
               />
-              <ChipInput
+              {/* <ChipInput
                 label="Search Tags"
                 variant="outlined"
                 style={{ margin: "10px 0" }}
                 value={tags}
                 onAdd={handleAdd}
                 onDelete={handleDelete}
-              />
+              /> */}
               <Button
                 onClick={searchPost}
                 variant="contained"
@@ -102,7 +101,10 @@ const Home = () => {
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             
             {/* if no tags or search*/}
-            {!searchQuery && !tags.length && (
+            {!searchQuery && 
+            // !tags.length
+            //  && 
+             (
               <Paper className={dazzle_it.pagination} elevation={6}>
                 <Folio page={page} />
               </Paper>

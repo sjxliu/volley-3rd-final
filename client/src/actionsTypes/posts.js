@@ -1,4 +1,4 @@
-import { FETCH_ALL, DELETE, UPDATE, CREATE, FETCH_BY_FILTERS, START_LOAD, END_LOAD, FETCH_BY_ID } from "../calls/callTypes";
+import { FETCH_ALL, DELETE, UPDATE, CREATE, FETCH_BY_FILTERS, START_LOAD, END_LOAD, FETCH_BY_ID, LIKE } from "../calls/callTypes";
 import * as api from "../api/index.js";
 
 
@@ -9,8 +9,8 @@ export const getPost = (id) => async (dispatch) => {
     dispatch({type: START_LOAD})
     const { data } = await api.fetchPost(id);
 
-    dispatch({ type: FETCH_BY_ID, payload: data });
-    dispatch({type: END_LOAD})
+    dispatch({ type: FETCH_BY_ID, payload: {post: data} });
+    // dispatch({type: END_LOAD})
   } catch (error) {
     console.log(error);
   }
@@ -20,9 +20,9 @@ export const getPost = (id) => async (dispatch) => {
 export const getPosts = (page) => async (dispatch) => {
   try {
     dispatch({type: START_LOAD})
-    const { data } = await api.fetchPosts();
+    const { data: {data, currentPage, numberOfPages} } = await api.fetchPosts(page);
 
-    dispatch({ type: FETCH_ALL, payload: data });
+    dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
     dispatch({type: END_LOAD})
   } catch (error) {
     console.log(error);
@@ -36,7 +36,7 @@ export const getSearchedPosts = (searchQuery) => async (dispatch) => {
       data: { data },
     } = await api.fetchSearchedPosts(searchQuery);
     // need to destructure data twice bc !st making axios request, 2nd time bc we put in new obj where it has data property
-    dispatch({ type: FETCH_BY_FILTERS, payload: data });
+    dispatch({ type: FETCH_BY_FILTERS, payload: { data } });
     dispatch({type: END_LOAD})
    // console.log(data);
   } catch (error) {
@@ -75,11 +75,11 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 
-export const supportPost = (id) => async (dispatch) => {
+export const supportPost = (id, user) => async (dispatch) => {
   try {
-    const { data } = await api.supportPost(id);
+    const { data } = await api.supportPost(id, user?.token);
 
-    dispatch({ type: UPDATE, payload: data });
+    dispatch({ type: LIKE, payload: data });
   } catch (error) {
     console.log(error);
   }

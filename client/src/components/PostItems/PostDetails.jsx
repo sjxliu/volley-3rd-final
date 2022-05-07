@@ -48,14 +48,14 @@ const PostDetails = () => {
             color="textSecondary"
             component="h2"
           >
-            {post.tags.map((tag) => (
+            {/* {post.tags.map((tag) => (
               <Link
                 to={`/tags/${tag}`}
                 style={{ textDecoration: "none", color: "#3f51b5" }}
               >
                 {` #${tag} `}
               </Link>
-            ))}
+            ))} */}
           </Typography>
           <Typography gutterBottom variant="body1" component="p">
             {post.message}
